@@ -18,8 +18,18 @@ export class ClientsRepository implements IClientsRepository {
     return this.model.create(data);
   }
 
-  async findAll(): Promise<ClientDocument[]> {
-    return this.model.find();
+  async findAll(
+    page: number,
+    limit: number,
+  ): Promise<{ data: ClientDocument[]; total: number }> {
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      this.model.find().skip(skip).limit(limit),
+      this.model.countDocuments(),
+    ]);
+
+    return { data, total };
   }
 
   async findById(id: string): Promise<ClientDocument | null> {

@@ -37,9 +37,20 @@ export class ClientsService {
     return this.map(client);
   }
 
-  async findAll(): Promise<ClientResponseDto[]> {
-    const clients = await this.repository.findAll();
-    return clients.map((client) => this.map(client));
+  async findAll(page: number, limit: number) {
+    const { data, total } = await this.repository.findAll(page, limit);
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data: data.map((client) => this.map(client)),
+      meta: {
+        page,
+        limit,
+        total,
+        totalPages,
+      },
+    };
   }
 
   async findOne(id: string): Promise<ClientResponseDto> {
