@@ -16,6 +16,12 @@ export class Client {
 
   @Prop({ required: true })
   document: string;
+
+  @Prop()
+  created_at: Date;
+
+  @Prop()
+  updated_at: Date;
 }
 
 export const ClientSchema = SchemaFactory.createForClass(Client);

@@ -3,9 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { IClientsRepository } from './clients.repository.interface';
-import { Client, ClientDocument } from './schemas/client.schema';
-import { CreateClientDto } from './dto/create-client.dto';
-import { UpdateClientDto } from './dto/update-client.dto';
+import { Client, ClientDocument } from '../schemas/client.schema';
+import { CreateClientDto } from '../dto/create-client.dto';
+import { UpdateClientDto } from '../dto/update-client.dto';
 
 @Injectable()
 export class ClientsRepository implements IClientsRepository {
