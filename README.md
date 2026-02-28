@@ -40,6 +40,7 @@ Controller → Service → Repository → MongoDB
 
 # 📦 Estrutura de Pastas
 
+```bash
 src/
  ├─ clients/
  │   ├─ dto/
@@ -51,7 +52,7 @@ src/
  ├─ common/
  ├─ filters/
  └─ main.ts
-
+```
 ------------------------------------------------------------------------
 
 # 📚 Funcionalidades
@@ -162,9 +163,10 @@ Inclui testes para: - ClientsService - ClientsController
 
 # 🔐 Variáveis de Ambiente
 
+```bash
 PORT=3333
 MONGO_URI=mongodb://admin:admin@mongo:27017/positivo-clients?authSource=admin
-
+```
 ------------------------------------------------------------------------
 
 # 🧠 Decisões Técnicas
