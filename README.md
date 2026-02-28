@@ -3,6 +3,7 @@
 API RESTful para gerenciamento de clientes desenvolvida como parte do
 desafio técnico para Programador Pleno -- Positivo S+.
 
+🌐 API em produção: [api.wisexml.com.br](https://api.wisexml.com.br)
 ------------------------------------------------------------------------
 
 # 🧱 Tecnologias Utilizadas
@@ -15,6 +16,8 @@ desafio técnico para Programador Pleno -- Positivo S+.
 -   Swagger / OpenAPI
 -   Pino (logger estruturado)
 -   Jest (testes unitários)
+-   AWS
+-   GitHub Actions
 
 ------------------------------------------------------------------------
 
@@ -37,9 +40,17 @@ Controller → Service → Repository → MongoDB
 
 # 📦 Estrutura de Pastas
 
-src/ ├── clients/ │ ├── dto/ │ ├── repositories/ │ ├── schemas/ │ ├──
-clients.controller.ts │ ├── clients.service.ts │ └── clients.module.ts
-├── common/ │ └── filters/ └── main.ts
+src/
+ ├─ clients/
+ │   ├─ dto/
+ │   ├─ repositories/
+ │   ├─ schemas/
+ │   ├─ clients.controller.ts
+ │   ├─ clients.service.ts
+ │   └─ clients.module.ts
+ ├─ common/
+ ├─ filters/
+ └─ main.ts
 
 ------------------------------------------------------------------------
 
@@ -56,26 +67,49 @@ clients.controller.ts │ ├── clients.service.ts │ └── clients.mod
 
 # 📄 Modelo do Cliente
 
-{ "id": "string", "name": "string", "email": "string", "document":
-"string", "created_at": "datetime", "updated_at": "datetime" }
-
+```json
+{
+  "id": "uuid",
+  "name": "string",
+  "email": "string",
+  "document": "string",
+  "createdAt": "ISO-8601 datetime",
+  "updatedAt": "ISO-8601 datetime"
+}
+```
 ------------------------------------------------------------------------
 
 # 📄 Paginação
 
 O endpoint GET /clients retorna:
 
-{ "data": \[...\], "meta": { "page": 1, "limit": 10, "total": 42,
-"totalPages": 5 } }
-
+```json
+{
+  "data": [],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "totalItems": 42,
+    "totalPages": 5,
+    "hasNextPage": true,
+    "hasPreviousPage": false
+  }
+}
+```
 ------------------------------------------------------------------------
 
 # ⚠ Tratamento de Erros
 
 A API possui Exception Filter Global que padroniza erros:
 
-{ "statusCode": 409, "message": "email already exists", "timestamp":
-"2026-02-27T18:00:00.000Z", "path": "/clients" }
+```json
+{
+  "statusCode": 409,
+  "message": "email already exists",
+  "timestamp": "2026-02-27T18:00:00.000Z",
+  "path": "/clients"
+}
+```
 
 Inclui tratamento automático para: - NotFoundException -
 ConflictException - Erros internos - Duplicate key do MongoDB (E11000)
@@ -88,16 +122,21 @@ Utiliza Pino para logging estruturado.
 
 Exemplo:
 
-{ "level": "info", "context": "ClientsService", "message": "Client
-created successfully", "clientId": "65f2..." }
-
+```json
+{
+  "level": "info",
+  "context": "ClientsService",
+  "message": "Client created successfully",
+  "clientId": "65f2..."
+}
+```
 ------------------------------------------------------------------------
 
 # 🐳 Executando com Docker
 
 ## Clonar repositório
 
-git clone `<repo-url>`{=html} cd clients-api
+git clone `git@github.com:sousaprogramador/positivo_back_end.git` cd positivo_back_end
 
 ## Subir containers
 
@@ -124,7 +163,7 @@ Inclui testes para: - ClientsService - ClientsController
 # 🔐 Variáveis de Ambiente
 
 PORT=3333
-MONGO_URI=mongodb://admin:admin@mongo:27017/clients?authSource=admin
+MONGO_URI=mongodb://admin:admin@mongo:27017/positivo-clients?authSource=admin
 
 ------------------------------------------------------------------------
 
@@ -162,3 +201,23 @@ Todas as decisões foram compreendidas e implementadas conscientemente.
 
 Projeto desenvolvido priorizando clareza, organização, escalabilidade e
 boas práticas.
+
+# 🚀 CI/CD e Deploy em Produção
+
+A aplicação está configurada com deploy automatizado via GitHub Actions, hospedada em ambiente AWS.
+
+# ☁️ Infraestrutura
+
+-  AWS EC2 (Amazon Linux 2023)
+
+-  Elastic IP
+
+-  Docker & Docker Compose
+
+-  Nginx (Reverse Proxy)
+
+-  HTTPS com Let's Encrypt
+
+-  MongoDB isolado via Docker Network
+
+# 🔄 Pipeline de Deploy

@@ -27,7 +27,7 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Clients API')
+    .setTitle('Clients API - Positivo+')
     .setDescription('API for managing clients')
     .setVersion('1.0')
     .build();
