@@ -4,6 +4,7 @@ import { ConflictException, NotFoundException } from '@nestjs/common';
 import { IClientsRepository } from './repositories/clients.repository.interface';
 import { ClientDocument } from './schemas/client.schema';
 import { CLIENTS_REPOSITORY } from './repositories/clients.repository.token';
+import { PinoLogger } from 'nestjs-pino';
 
 describe('ClientsService', () => {
   let service: ClientsService;
@@ -29,6 +30,13 @@ describe('ClientsService', () => {
     delete: jest.fn(),
   };
 
+  const mockLogger = {
+    setContext: jest.fn(),
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -36,6 +44,10 @@ describe('ClientsService', () => {
         {
           provide: CLIENTS_REPOSITORY,
           useValue: mockRepository,
+        },
+        {
+          provide: PinoLogger,
+          useValue: mockLogger,
         },
       ],
     }).compile();
