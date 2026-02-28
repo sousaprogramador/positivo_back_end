@@ -1,11 +1,9 @@
-version: '3.8'
-
 services:
   api:
     build: .
     container_name: clients_api
-    expose:
-      - "3333"
+    ports:
+      - "3333:3333"
     env_file:
       - .env
     depends_on:
